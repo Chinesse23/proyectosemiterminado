@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disponibilidad de Posadas</title>
+  <link rel="stylesheet" href="/css/css/linea.css">
+</head>
+<body>
+  <header>
+    <h1>Disponibilidad de Posadas</h1>
+  </header>
+  <main>
+    <div id="availability"></div>
+  </main>
+  <footer>
+    <p>© 2024 Reservas en Línea</p>
+  </footer>
+
+  <script>
+  // Recupera los datos del localStorage
+const arrival = localStorage.getItem('arrival');
+const departure = localStorage.getItem('departure');
+const guests = localStorage.getItem('guests');
+
+// Función para verificar disponibilidad (simulada)
+function checkAvailability(arrival, departure, guests) {
+  // Aquí puedes agregar la lógica para verificar la disponibilidad real
+  // Por ahora, vamos a simular la disponibilidad
+  return {
+    'Posada Turpial': true,
+    'Los Ranchos de Chano': false,
+    'Posada Las Garcías': true
+  };
+}
+
+// Verifica la disponibilidad
+const availability = checkAvailability(arrival, departure, guests);
+
+// Muestra la disponibilidad en la página
+const availabilityDiv = document.getElementById('availability');
+availabilityDiv.innerHTML = ''; // Asegúrate de limpiar el contenido antes de agregar nuevos elementos
+
+const images = {
+  'Posada Turpial': 'assets/room-1-choroni.jpg',
+  'Los Ranchos de Chano': 'room-2.jpg', // Reemplaza con el nombre real del archivo
+  'Posada Las Garcías': 'room-3.jpg'  // Reemplaza con el nombre real del archivo
+};
+
+for (const [posada, isAvailable] of Object.entries(availability)) {
+  const posadaDiv = document.createElement('div');
+  posadaDiv.classList.add('posada');
+  const imageName = images[posada] || 'default.jpg'; // Usa una imagen por defecto si no se encuentra en el objeto images
+  posadaDiv.innerHTML = `
+    <img src="assets/${imageName}" alt="${posada}">
+    <h2>${posada}</h2>
+    <p>${isAvailable ? 'Disponible' : 'No Disponible'}</p>
+  `;
+  availabilityDiv.appendChild(posadaDiv);
+}
+
+  </script>
+</body>
+</html>
